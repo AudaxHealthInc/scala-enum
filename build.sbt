@@ -1,7 +1,9 @@
 
 name := "scala-enum"
 
-organization := "me.jeffmay"
+organization := "com.rallyhealth"
+
+organizationName := "Rally Health"
 
 version := "1.0.0"
 
@@ -34,7 +36,20 @@ sources in(Compile, doc) := Seq.empty
 // disable publishing empty ScalaDocs
 publishArtifact in (Compile, packageDoc) := false
 
-bintraySettings ++ bintrayPublishSettings
-
 licenses += ("Apache-2.0", url("http://opensource.org/licenses/apache-2.0"))
+
+// Rally Settings
+/////////////////
+
+publishTo <<= version { version: String =>
+  val repoBaseUrl = "https://artifacts.werally.in/artifactory/"
+  val (name, url) = if (version.contains("-SNAPSHOT"))
+    ("libs-snapshot-local", repoBaseUrl + "libs-snapshot-local")
+  else
+    ("libs-release-local", repoBaseUrl + "libs-release-local")
+  Some(Resolver.url(name, new URL(url))(Resolver.mavenStylePatterns))
+}
+
+// All of the published versions
+resolvers += "Artifactory Libs Release" at "https://artifacts.werally.in/artifactory/libs-release"
 
