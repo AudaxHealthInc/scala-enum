@@ -5,8 +5,6 @@ organization := "com.rallyhealth"
 
 organizationName := "Rally Health"
 
-version := "1.0.0"
-
 crossScalaVersions := Seq("2.11.6", "2.10.4")
 
 scalacOptions := {
